@@ -3,10 +3,10 @@ points = []
 
 with open("irrigation.in") as fInput:
     lines = fInput.readlines()
-    N, C = (int(n) for n in lines[0].strip())
+    N, C = (int(n) for n in lines[0].strip().split())
     for l in range(1, N+1):
         v1, v2 = (int(v) for v in lines[l].strip().split())
-    points.append((v1, v2))
+        points.append((v1, v2))
 
 
 
@@ -19,7 +19,7 @@ for i in range(0, N-1):
         x2 = v2[0]
         y2 = v2[1]
         w = (x1-x2)**2 + (y1-y2)**2
-        if w>C:
+        if w>=C:
             Edges.append((w, i, j))
 
 Edges.sort()
@@ -45,14 +45,14 @@ def unify(v1, v2):
             groups.append(set([v1, v2]))
         elif g1 != g2:
             g1.update(g2)
-            groups.remove()
+            groups.remove(g2)
         return True
 
 result = 0
 for edge in Edges:
     w = edge[0]
     v1 = edge[1]
-    v2 = edge[0]
+    v2 = edge[2]
     if unify(v1, v2):
         result += w
 
